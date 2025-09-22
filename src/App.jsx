@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import BlogDetail from "./pages/BlogDetail";
 import AddBlog from "./pages/AddBlog";
 import EditBlog from "./pages/EditBlog";
@@ -41,14 +43,23 @@ export default function App() {
               path="/"
               element={<Home blogs={blogs} loading={loading} />}
             />
+            <Route path="/login" element={<Login />} />
             <Route path="/blog/:id" element={<BlogDetail />} />
             <Route
               path="/add"
-              element={<AddBlog blogs={blogs} setBlogs={setBlogs} />}
+              element={
+                <ProtectedRoute>
+                  <AddBlog blogs={blogs} setBlogs={setBlogs} />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/edit/:id"
-              element={<EditBlog blogs={blogs} setBlogs={setBlogs} />}
+              element={
+                <ProtectedRoute>
+                  <EditBlog blogs={blogs} setBlogs={setBlogs} />
+                </ProtectedRoute>
+              }
             />
           </Routes>
         </main>
